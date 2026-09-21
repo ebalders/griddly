@@ -28,6 +28,7 @@ public abstract class GriddlySettings : IGriddlyFilterSettings
     public static int? DefaultPageSize = null;
     public static FilterMode? DefaultInitialFilterMode = FilterMode.Form;
     public static bool DefaultShowRowSelectCount = true;
+    public static bool DefaultKeepSelectionOnFilter = false;
     public static bool ExportCurrencySymbol = true;
     public static bool DisableHistoryParameters = false;
     
@@ -106,6 +107,7 @@ public abstract class GriddlySettings : IGriddlyFilterSettings
         PageSize = DefaultPageSize;
         InitialFilterMode = DefaultInitialFilterMode;
         ShowRowSelectCount = DefaultShowRowSelectCount;
+        KeepSelectionOnFilter = DefaultKeepSelectionOnFilter;
 
 #if NETCOREAPP
         Html = html;
@@ -133,6 +135,11 @@ public abstract class GriddlySettings : IGriddlyFilterSettings
     public FilterMode? InitialFilterMode { get; set; }
     public bool IsFilterFormInline { get; set; }
     public bool ShowRowSelectCount { get; set; }
+    /// <summary>
+    /// Keep selected rows when a filter or sort change refreshes the grid.
+    /// By default a refilter drops rows that are no longer in the results.
+    /// </summary>
+    public bool KeepSelectionOnFilter { get; set; }
     public IDictionary<string, object> HtmlAttributes { get; set; }
     public IDictionary<string, object> TableHtmlAttributes { get; set; }
 

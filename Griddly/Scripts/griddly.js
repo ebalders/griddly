@@ -1842,7 +1842,8 @@
                         }
                     });
 
-                    // update selected rows to only those that are still present, in case an update filtered them away
+                    // Apply the retained selection: only visible rows after a refilter,
+                    // or the full prior selection when paging or keepSelectionOnFilter is set.
                     _this.options.selectedRows = remainingRows;
                     this.setSelectedCount();
                     

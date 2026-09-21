@@ -160,6 +160,7 @@
             @: @Html.AttributeNullable("data-griddly-filtermode", activeFilterMode != FilterMode.None ? activeFilterMode.ToString() : null)
             @: @Html.AttributeNullable("data-griddly-allowedfiltermodes", settings.AllowedFilterModes != FilterMode.None ? Newtonsoft.Json.JsonConvert.SerializeObject(Enum.GetValues(typeof(FilterMode)).Cast<FilterMode>().Where(x => settings.AllowedFilterModes.Value.HasFlag(x) && x != FilterMode.Both && x != FilterMode.None).Select(x => x.ToString())) : null)
             @: data-griddly-isfilterforminline="@settings.IsFilterFormInline.ToString().ToLower()"
+            @: @Html.AttributeIf("data-griddly-keepselectiononfilter", settings.KeepSelectionOnFilter, true)
             @: data-griddly-remove-icon-css-class="@settings.Css.Icons.Remove"
             @: data-griddly-pagesize="@(settings.PageSize ?? Model.PageSize)"
             @: @Html.AttributeNullable("data-griddly-rowclickmodal", settings.RowClickModal)

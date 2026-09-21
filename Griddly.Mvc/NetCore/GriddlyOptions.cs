@@ -56,6 +56,11 @@ public class GriddlyOptions
         get { return GriddlySettings.DefaultShowRowSelectCount; }
         set { GriddlySettings.DefaultShowRowSelectCount = value; }
     }
+    public bool DefaultKeepSelectionOnFilter
+    {
+        get { return GriddlySettings.DefaultKeepSelectionOnFilter; }
+        set { GriddlySettings.DefaultKeepSelectionOnFilter = value; }
+    }
     public bool ExportCurrencySymbol
     {
         get { return GriddlySettings.ExportCurrencySymbol; }
