@@ -714,6 +714,7 @@
             var currencySymbol = this.$element.data("griddly-currency-symbol");
             var removeIconCssClass = this.$element.data("griddly-remove-icon-css-class");
             var isDeepLink = this.$element.data("griddly-isdeeplink");
+            var keepSelectionOnFilter = this.$element.data("griddly-keepselectiononfilter");
 
             this.additionalRequestValues = {};
 
@@ -735,6 +736,9 @@
 
             if (isMultiSort != null)
                 this.options.isMultiSort = isMultiSort == true;
+
+            if (keepSelectionOnFilter != null)
+                this.options.keepSelectionOnFilter = keepSelectionOnFilter == true;
 
             this.options.sortFields = currentSort && currentSort.length ? currentSort : [];
             this.options.defaultSort = defaultSort && defaultSort.length ? defaultSort : [];
@@ -950,7 +954,7 @@
                             {
                                 var oldSortDisplay = $(event.currentTarget).parents("tr").find("th[data-griddly-sortfield='" + thisSortField + "']");
 
-                                if (inlineFilters.length)
+                                if (inlineFilters.length && oldSortDisplay.length)
                                     oldSortDisplay = [oldSortDisplay[0], inlineFilters[0].cells[oldSortDisplay[0].cellIndex]];
 
                                 $(oldSortDisplay).removeClass("sorted_a").removeClass("sorted_d");
@@ -1821,9 +1825,10 @@
 
                     // iterate through table and check rows that are in the selected list and have a checkbox
                     var _this = this;
-                    // Filter/sort changes (resetPage) drop selections that no longer match the result set.
+                    // Filter/sort changes (resetPage) drop selections that no longer match the result set,
+                    // unless keepSelectionOnFilter is set, in which case selections survive the refilter.
                     // Page navigation preserves off-page selections so users can accumulate selections across pages.
-                    var remainingRows = resetPage ? { } : $.extend({}, _this.options.selectedRows);
+                    var remainingRows = resetPage && !this.options.keepSelectionOnFilter ? { } : $.extend({}, _this.options.selectedRows);
 
                     $("tbody tr", this.$element).find("input[name=_rowselect]").each(function (index, e) {
                         var rowkey = $(e).data("rowkey");
@@ -2073,6 +2078,7 @@
         handleRowClick: null,
         handleRowClickModal: null,
         selectedRows: null,
+        keepSelectionOnFilter: false,
         autoRefreshOnFilter: true,
         filterMode: null,
         allowedFilterModes: [],
